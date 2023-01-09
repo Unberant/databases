@@ -1,5 +1,3 @@
-from tables import table
-
 class View:
     def __init__(self):
         self.table = None
@@ -13,8 +11,7 @@ class View:
             4. Update record
             5. Delete record
             6. Add new random records
-            7. Search
-            8. Exit
+            7. Exit
         ''')
 
     def list_of_tables(self):
@@ -28,11 +25,11 @@ class View:
             6. Exit
         ''')
 
-    def show_table(self, table: table, data):
+    def show_table(self, table, data):
         columns = table.columns
         column_width   = int(130 / len(columns))
         executor_width = 4
-        print("\n" + f'  {table.name}  '.center(130 + executor_width, "="), end='\n    ')
+        print("\n" + f'  {table.__tablename__}  '.center(130 + executor_width, "="), end='\n    ')
         for column in columns:
             print(str(column).center(column_width," "), end='')
         print()
