@@ -1,18 +1,16 @@
-import sqlalchemy
-from sqlalchemy import create_engine, Column, ForeignKey, Integer, String
-from sqlalchemy.orm import sessionmaker, relationship
-from sqlalchemy.ext.declarative import declarative_base
 import string
 import random
 import randomtimestamp
 from typing import Any, List, Tuple
+from sqlalchemy import create_engine, Column, ForeignKey, Integer, String
+from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.ext.declarative import declarative_base
 
-user = 'postgres'
+user     = 'postgres'
 password = 'qwerty'
-host = 'localhost'
-port = 5432
+host     = 'localhost'
+port     = 5432
 database = 'airport'
-
 
 def get_engine():
     return create_engine(url=f"postgresql://{user}:{password}@{host}:{port}/{database}")
