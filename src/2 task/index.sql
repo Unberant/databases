@@ -37,8 +37,6 @@ VALUES
     round(random()*50)::int
 );
 
-SELECT Count(id)
-FROM wind_log
 
 SELECT AVG(speed)
 FROM wind_log
@@ -47,7 +45,7 @@ WHERE time_st>='2021-10-15' AND time_st<'2021-10-16';
 DROP INDEX IF EXISTS average_speed;
 CREATE INDEX average_speed ON wind_log
 USING btree (time_st);
-vacuum analyze;
+--
 SELECT AVG(speed)
 FROM wind_log
 WHERE time_st>='2021-10-15' AND time_st<'2021-10-16';
@@ -55,7 +53,7 @@ WHERE time_st>='2021-10-15' AND time_st<'2021-10-16';
 DROP INDEX IF EXISTS average_speed;
 CREATE INDEX average_speed ON wind_log
 USING BRIN (time_st) WITH (pages_per_range = 128);
--- vacuum analyse;
+--
 SELECT AVG(speed)
 FROM wind_log
 WHERE time_st>='2021-10-15' AND time_st<'2021-10-16';

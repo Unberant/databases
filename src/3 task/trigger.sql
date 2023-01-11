@@ -46,23 +46,3 @@ CREATE OR REPLACE TRIGGER UsersDeleteTrigger
     BEFORE DELETE ON user_account
     FOR EACH ROW EXECUTE FUNCTION delete_func();
 
-
-CREATE OR REPLACE FUNCTION employee_stamp() RETURNS trigger AS $employee_stamp$
-  BEGIN
-    IF (TG_OP = 'DELETE') THEN
-            INSERT INTO employee_audit SELECT 'DELETE', now(), OLD.id, OLD.username, OLD.salary;
-    ELSIF (TG_OP = 'UPDATE') THEN
-      IF NEW.salary < 0 THEN
-        RAISE EXCEPTION '% cannot have a negative salary', NEW.username;
-      END IF;
-      INSERT INTO employee_audit SELECT 'UPDATE', now(), NEW.id, NEW.username, NEW.salary;
-    END IF;
-      
-        NEW.last_update := current_timestamp;
-        RETURN NEW;
-    END;
-$employee_stamp$ LANGUAGE plpgsql;
-
-CREATE TRIGGER employee_stamp BEFORE UPDATE OR DELETE ON employee
-  FOR EACH ROW EXECUTE FUNCTION employee_stamp();
-
